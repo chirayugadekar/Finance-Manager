@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>User Registration</title>
+</head>
+<body>
+  <h1>User Registration</h1>
+
+  <form id="regForm">
+    <div>
+      <label>Name: <input id="name" required /></label>
+    </div>
+    <div>
+      <label>Email: <input id="email" type="email" required /></label>
+    </div>
+    <div>
+      <label>Password: <input id="password" type="password" /></label>
+    </div>
+
+    <div style="margin-top:10px;">
+      <button type="submit">Register</button>
+      <button type="button" id="view">View Registered Users</button>
+    </div>
+  </form>
+
+  <script>
+    const KEY = 'simple_users';
+
+    function loadUsers(){
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+      catch(e){ return []; }
+    }
+
+    function saveUsers(arr){
+      localStorage.setItem(KEY, JSON.stringify(arr));
+    }
+
+    document.getElementById('regForm').addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const user = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value // optional; do NOT store real passwords in production
+      };
+
+      if(!user.name || !user.email){
+        alert('Name and email required');
+        return;
+      }
+
+      const users = loadUsers();
+      users.push(user);
+      saveUsers(users);
+
+      // Optional: send to backend (uncomment and change URL if you have a server)
+      /*
+      fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(user)
+      }).catch(()=>console.warn('POST failed or no server'));
+      */
+
+      // go to list page
+      window.location.href = 'list.html';
+    });
+
+    document.getElementById('view').addEventListener('click', function(){
+      window.location.href = 'list.html';
+    });
+  </script>
+</body>
+</html>

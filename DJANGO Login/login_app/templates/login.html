@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Finance Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #00c6ff, #0072ff, #5f2c82, #49a09d);
+      background-size: 400% 400%;
+      animation: backgroundShift 12s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+      width: 360px;
+      animation: fadeIn 1.2s ease-in-out;
+      position: relative;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -5px; left: -5px;
+      right: -5px; bottom: -5px;
+      z-index: -1;
+      border-radius: 20px;
+      background: linear-gradient(60deg, #00c6ff, #0072ff, #5f2c82, #49a09d);
+      background-size: 300% 300%;
+      animation: glow 6s ease infinite;
+      filter: blur(10px);
+    }
+
+    @keyframes glow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container h2 {
+      margin-bottom: 30px;
+      color: #0072ff;
+    }
+
+    form label {
+      font-weight: 600;
+    }
+
+    form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+
+    form input:focus {
+      border-color: #0072ff;
+      box-shadow: 0 0 8px rgba(0, 102, 255, 0.3);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #0072ff, #00c6ff);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .signup-link {
+      margin-top: 15px;
+      font-size: 0.95em;
+    }
+
+    .signup-link a {
+      color: #0072ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+      color: #00bfff;
+    }
+
+    .system-label {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+      background-color: rgba(0,0,0,0.2);
+      padding: 10px 16px;
+      border-radius: 12px;
+      transition: 0.3s ease;
+    }
+
+    .system-label:hover {
+      background-color: rgba(0,0,0,0.4);
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+
+    @media (max-width: 450px) {
+      .container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top-right floating label -->
+  <div class="system-label">💸 Finance System</div>
+
+  <div class="container">
+    <h2>🔐 Login to Your Account</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.email.label_tag }}
+      {{ form.email }}
+
+      {{ form.password.label_tag }}
+      {{ form.password }}
+
+      {% if form.non_field_errors %}
+        <div class="error">{{ form.non_field_errors.0 }}</div>
+      {% endif %}
+
+      <button type="submit">➡️ Login</button>
+    </form>
+
+    <div class="signup-link">
+      🙋‍♂️ Don’t have an account? <a href="/signup">Sign up here</a>
+    </div>
+  </div>
+
+</body>
+</html>
